@@ -58,7 +58,7 @@ CREATE TABLE `sc` (
   `Sno` int(10) NOT NULL,
   `Cno` varchar(10) NOT NULL,
   `Grade` int(10) DEFAULT NULL,
-  PRIMARY KEY (`Sno`),
+  KEY `Sno` (`Sno`),
   KEY `Cno` (`Cno`),
   CONSTRAINT `sc_ibfk_1` FOREIGN KEY (`Sno`) REFERENCES `s` (`Sno`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sc_ibfk_2` FOREIGN KEY (`Cno`) REFERENCES `c` (`Cno`) ON DELETE CASCADE ON UPDATE CASCADE
