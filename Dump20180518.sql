@@ -27,7 +27,7 @@ CREATE TABLE `c` (
   `Cname` varchar(10) NOT NULL,
   `Ccredit` int(10) NOT NULL,
   PRIMARY KEY (`Cno`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `s` (
   `Sage` int(10) NOT NULL,
   `Sdept` varchar(10) NOT NULL,
   PRIMARY KEY (`Sno`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,8 +58,11 @@ CREATE TABLE `sc` (
   `Sno` int(10) NOT NULL,
   `Cno` varchar(10) NOT NULL,
   `Grade` int(10) DEFAULT NULL,
-  PRIMARY KEY (`Sno`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`Sno`),
+  KEY `Cno` (`Cno`),
+  CONSTRAINT `sc_ibfk_1` FOREIGN KEY (`Sno`) REFERENCES `s` (`Sno`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sc_ibfk_2` FOREIGN KEY (`Cno`) REFERENCES `c` (`Cno`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,4 +82,4 @@ CREATE TABLE `sc` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-18 19:42:44
+-- Dump completed on 2018-05-18 20:13:38
