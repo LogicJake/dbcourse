@@ -7,7 +7,7 @@ session_start();
 require_once './include/result.class.php';
 
 // white list
-$actionList = ['insertStu','insertSc','insertCourse','deleteStu','deleteSc','deleteCourse'];
+$actionList = ['insertStu','insertSc','insertCourse','deleteStu','deleteSc','deleteCourse','selectStuAll'];
 
 
 if (!isset($_GET['_action'])) {
