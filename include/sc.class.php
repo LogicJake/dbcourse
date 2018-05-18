@@ -10,3 +10,16 @@ function insertSc($sno,$cno,$grade){
         $res['data'] = "插入失败：".$db -> error ;
     return $res;
 }
+
+
+function deletetSc($sno,$cno){
+    global $db,$sc;
+
+    $sql = "DELETE FROM ".$sc." WHERE Cno = '".$cno."' AND Sno = ".$sno;
+    $res['sql'] = $sql;
+    if(mysqli_query($db,$sql))
+        $res['data'] = "删除成功";
+    else
+        $res['data'] = "删除失败：".$db -> error ;
+    return $res;
+}

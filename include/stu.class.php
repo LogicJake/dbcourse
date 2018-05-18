@@ -10,3 +10,15 @@ function insertStu($sno,$sname,$ssex,$sage,$sdept){
         $res['data'] = "插入失败：".$db -> error ;
     return $res;
 }
+
+function deletetStu($sno){
+    global $db,$stu;
+
+    $sql = "DELETE FROM ".$stu." WHERE Sno = ".$sno;
+    $res['sql'] = $sql;
+    if(mysqli_query($db,$sql))
+        $res['data'] = "删除成功";
+    else
+        $res['data'] = "删除失败：".$db -> error ;
+    return $res;
+}
