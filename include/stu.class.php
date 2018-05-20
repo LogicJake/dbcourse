@@ -74,7 +74,6 @@ function getStu($sno){
             $tmp['dept'] = $row[4];
             $res['data'] = $tmp;
             $res['status'] = 1;
-            print_r($row);
         }
         else
             $res['status'] = 0;
