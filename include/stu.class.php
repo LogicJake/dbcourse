@@ -59,3 +59,30 @@ function selectStuAll($page){
         $res['msg'] = "查询失败：".$db -> error ;
     return $res;
 }
+
+function getStu($sno){
+    global $db,$stu;
+    $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$sno;
+    $res['sql'] = $sql;
+    if($re = mysqli_query($db,$sql)){
+        $row = mysqli_fetch_row($re);
+        if(count($row)!=0){
+            $tmp['no'] = $row[0];
+            $tmp['name'] = $row[1];
+            $tmp['sex'] = $row[2];
+            $tmp['age'] = $row[3];
+            $tmp['dept'] = $row[4];
+            $res['data'] = $tmp;
+            $res['status'] = 1;
+            print_r($row);
+        }
+        else
+            $res['status'] = 0;
+    }
+    else{
+        $res['status'] = -1;
+        $res['msg'] = "查询失败：".$db -> error ;
+    }
+    return $res;
+
+}
