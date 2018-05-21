@@ -43,7 +43,10 @@ function selectStuAll($page){
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
-        $rows = mysqli_fetch_all($re);
+        $rows = array();
+        while($row = mysqli_fetch_array($re)) {
+            $rows[] = $row;
+        }
         foreach($rows as $row){
             $tmp['no'] = $row[0];
             $tmp['name'] = $row[1];
