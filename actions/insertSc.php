@@ -2,7 +2,7 @@
 
 require_once './include/sc.class.php';
 if(isset($_GET['sno'],$_GET['cno'])){
-    $res = insertSc($_GET['sno'],$_GET['cno'],$_GET['grade']);
+    $res = insertSc($_GET['sno'],$_GET['cno']);
     Result::success($res);
 }
 else

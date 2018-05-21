@@ -5,9 +5,11 @@ function insertSc($sno,$cno,$grade){
     $sql = "INSERT INTO ".$sc." (Sno,Cno) VALUES (".$sno.",'".$cno."')";
     $res['sql'] = $sql;
     if(mysqli_query($db,$sql))
-        $res['msg'] = "插入成功";
-    else
-        $res['msg'] = "插入失败：".$db -> error ;
+        $res['status'] = 1;
+    else{        
+        $res['status'] = 0;
+        $res['error'] = "插入失败：".$db -> error ;
+    }
     return $res;
 }
 
