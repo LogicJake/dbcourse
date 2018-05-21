@@ -48,7 +48,6 @@ function selectScByCno($page,$cno){
         while($row = mysqli_fetch_array($re)) {
             $rows[] = $row;
         }
-        print_r($rows);
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
