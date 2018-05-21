@@ -1,5 +1,5 @@
 <?php
-function insertSc($sno,$cno,$grade){
+function insertSc($sno,$cno){
     global $db,$sc;
 
     $sql = "INSERT INTO ".$sc." (Sno,Cno) VALUES (".$sno.",'".$cno."')";
