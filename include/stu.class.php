@@ -25,7 +25,7 @@ function deletetStu($sno){
 
 function selectStuAll($page){
     global $db,$stu;
-    $page_num = 5;  //每页查看5条
+    $page_num = 1;  //每页查看5条
     $start = ($page-1)*$page_num;
     $end = $start+$page_num;
 
