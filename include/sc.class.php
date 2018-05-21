@@ -48,6 +48,7 @@ function selectScByCno($page,$cno){
         while($row = mysqli_fetch_array($re)) {
             $rows[] = $row;
         }
+<<<<<<< HEAD
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
@@ -88,6 +89,8 @@ function selectScBySno($page,$sno){
         while($row = mysqli_fetch_array($re)) {
             $rows[] = $row;
         }
+=======
+>>>>>>> fc0181e9ff0de0efffa8423b1c8729179078226e
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
