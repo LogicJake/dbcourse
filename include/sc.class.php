@@ -20,9 +20,11 @@ function deletetSc($sno,$cno){
     $sql = "DELETE FROM ".$sc." WHERE Cno = '".$cno."' AND Sno = ".$sno;
     $res['sql'] = $sql;
     if(mysqli_query($db,$sql))
-        $res['msg'] = "删除成功";
-    else
-        $res['msg'] = "删除失败：".$db -> error ;
+        $res['status'] = 1;
+    else{        
+        $res['status'] = 0;
+        $res['error'] = "删除失败：".$db -> error ;
+    }
     return $res;
 }
 
@@ -82,7 +84,7 @@ function selectScBySno($page,$sno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = '".$sno."' ORDER BY s.Sno LIMIT 0,5";
+    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = '".$sno."' ORDER BY c.Cno LIMIT 0,5";
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
@@ -93,9 +95,10 @@ function selectScBySno($page,$sno){
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
+            $tmp['cno'] = $row[4];
             $tmp['cname'] = $row[2];
             $tmp['credit'] = $row[3];
-            $tmp['grade'] = $row[4]==null?"未录入":$row[4];
+            $tmp['grade'] = $row[5]==null?"未录入":$row[5];
             array_push($data,$tmp);
         }
         $res['msg'] = "查询成功";
