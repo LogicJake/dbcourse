@@ -90,5 +90,17 @@ function getStu($sno){
         $res['msg'] = "查询失败：".$db -> error ;
     }
     return $res;
+}
 
+function updateStu($sno,$sname,$ssex,$sage,$sdept){
+    global $db,$stu;
+    $sql = "UPDATE ".$stu." SET Sno = '".$sno."',Sname = '".$sname."',Ssex = '".$ssex."',Sage = ".$sage.",Sdept = '".$sdept."' WHERE Sno = '".$sno."'";
+    $res['sql'] = $sql;
+    if(mysqli_query($db,$sql))
+        $res['status'] = 1;    
+    else{
+        $res['status'] = 0;
+        $res['error'] = "更新失败：".$db -> error ;
+    }
+    return $res;
 }
