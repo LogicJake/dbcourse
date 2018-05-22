@@ -108,3 +108,16 @@ function selectScBySno($page,$sno){
         $res['msg'] = "查询失败：".$db -> error ;
     return $res;
 }
+
+function updateGrade($sno,$cno,$grade){
+    global $db,$sc;
+    $sql = "UPDATE ".$sc." SET Grade = ".$grade." WHERE Cno = '".$cno."' AND Sno = ".$sno;
+    $res['sql'] = $sql;
+    if(mysqli_query($db,$sql))
+        $res['status'] = 1;    
+    else{
+        $res['status'] = 0;
+        $res['error'] = "更新失败：".$db -> error ;
+    }
+    return $res;
+}
