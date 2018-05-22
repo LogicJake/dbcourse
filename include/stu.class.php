@@ -22,7 +22,7 @@ function deletetStu($sno){
         $res['status'] = 1;    
     else{
         $res['status'] = 0;
-        $res['error'] = "插入失败：".$db -> error ;
+        $res['error'] = "删除失败：".$db -> error ;
     }
     return $res;
 }

@@ -19,9 +19,11 @@ function deletetCourse($cno){
     $sql = "DELETE FROM ".$course." WHERE Cno = '".$cno."'";
     $res['sql'] = $sql;
     if(mysqli_query($db,$sql))
-        $res['msg'] = "删除成功";
-    else
-        $res['msg'] = "删除失败：".$db -> error ;
+        $res['status'] = 1;    
+    else{
+        $res['status'] = 0;
+        $res['error'] = "删除失败：".$db -> error ;
+    }
     return $res;
 }
 
