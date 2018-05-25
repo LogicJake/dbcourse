@@ -32,7 +32,6 @@ function selectScByCno($page,$cno){
     global $db,$sc,$stu,$course;
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
-    $end = $start+$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$sc;
     if($re = mysqli_query($db,$sql)){
@@ -44,7 +43,7 @@ function selectScByCno($page,$cno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '".$cno."' ORDER BY s.Sno LIMIT 0,5";
+    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '".$cno."' ORDER BY s.Sno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
@@ -72,7 +71,6 @@ function selectScBySno($page,$sno){
     global $db,$sc,$stu,$course;
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
-    $end = $start+$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$sc;
     if($re = mysqli_query($db,$sql)){
@@ -84,7 +82,7 @@ function selectScBySno($page,$sno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = '".$sno."' ORDER BY c.Cno LIMIT 0,5";
+    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = '".$sno."' ORDER BY c.Cno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){

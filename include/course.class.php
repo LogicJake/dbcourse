@@ -31,7 +31,6 @@ function selectCourseAll($page){
     global $db,$course;
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
-    $end = $start+$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$course;
     if($re = mysqli_query($db,$sql)){
@@ -43,20 +42,20 @@ function selectCourseAll($page){
             $res['finished'] = TRUE;
     }
 
-    $sql = "SELECT * FROM ".$course." ORDER BY Cno LIMIT ".$start.",".$end;
+    $sql = "SELECT * FROM ".$course." ORDER BY Cno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
         $rows = array();
+        
+        $i = 0;
         while($row = mysqli_fetch_array($re)) {
-            $rows[] = $row;
-        }
-        foreach($rows as $row){
             $tmp['no'] = $row[0];
             $tmp['name'] = $row[1];
             $tmp['credit'] = $row[2];
             array_push($data,$tmp);
         }
+        mysqli_free_result($re);
         $res['msg'] = "查询成功";
         $res['data'] = $data;
     }
@@ -69,7 +68,6 @@ function selectCourseStatus($page,$sno){
     global $db,$course,$sc;
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
-    $end = $start+$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$course;
     if($re = mysqli_query($db,$sql)){
@@ -81,7 +79,7 @@ function selectCourseStatus($page,$sno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "SELECT * FROM ".$course." ORDER BY Cno LIMIT ".$start.",".$end;
+    $sql = "SELECT * FROM ".$course." ORDER BY Cno LIMIT ".$start.",".$page_num;
     $res['sql1'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){

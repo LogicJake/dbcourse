@@ -31,7 +31,6 @@ function selectStuAll($page){
     global $db,$stu;
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
-    $end = $start+$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$stu;
     if($re = mysqli_query($db,$sql)){
@@ -43,7 +42,7 @@ function selectStuAll($page){
             $res['finished'] = TRUE;
     }
 
-    $sql = "SELECT * FROM ".$stu." ORDER BY Sno LIMIT ".$start.",".$end;
+    $sql = "SELECT * FROM ".$stu." ORDER BY Sno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
