@@ -52,7 +52,7 @@ function GetInfo($cookie){        //爬取个人信息
         CURLOPT_REFERER => 'http://ded.nuaa.edu.cn'
     ]);
     $response = curl_exec($curl);
-    $response=mb_convert_encoding($response, 'UTF-8', 'UTF-8,GBK,GB2312,BIG5');      //解决乱码
+    //$response=mb_convert_encoding($response, 'UTF-8', 'UTF-8,GBK,GB2312,BIG5');      //解决乱码
         //$preg = "#<td.*>(.*)&nbsp;</font>#"; 
     $preg = "#<td.*>(.*)&nbsp;.*>#"; 
         // echo $response;
