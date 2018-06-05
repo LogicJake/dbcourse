@@ -103,3 +103,41 @@ function updateStu($sno,$sname,$ssex,$sage,$sdept){
     }
     return $res;
 }
+
+function selectStu($key){
+    global $db,$stu;
+    $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key."";
+    $res['sql'] = $sql;
+    $res['status'] = 0;
+    if($re = mysqli_query($db,$sql)){
+        $row = mysqli_fetch_row($re);
+        if(count($row)!=0){
+            $tmp['no'] = $row[0];
+            $tmp['name'] = $row[1];
+            $tmp['sex'] = $row[2];
+            $tmp['age'] = $row[3];
+            $tmp['dept'] = $row[4];
+            $res['data'] = $tmp;
+            $res['status'] = 1;
+        }
+    }
+
+    $sql = "SELECT * FROM ".$stu." WHERE Sname like '%".$key."%'";
+    $res['sql2'] = $sql;
+    if($re = mysqli_query($db,$sql)){
+        $row = mysqli_fetch_row($re);
+        if(count($row)!=0){
+            $tmp['no'] = $row[0];
+            $tmp['name'] = $row[1];
+            $tmp['sex'] = $row[2];
+            $tmp['age'] = $row[3];
+            $tmp['dept'] = $row[4];
+            $res['data'] = $tmp;
+            $res['status'] = 1;
+        }
+        else
+            $status = 0;
+    }
+
+    return $res;
+}
