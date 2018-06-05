@@ -106,14 +106,9 @@ function updateStu($sno,$sname,$ssex,$sage,$sdept){
 
 function selectStu($key){
     global $db,$stu;
-<<<<<<< HEAD
     $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key."";
     $res['sql'] = $sql;
     $res['status'] = 0;
-=======
-    $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key;
-    $res['sql'] = $sql;
->>>>>>> dcd1e73287e61513fef2c7490a826be7c3581fcb
     if($re = mysqli_query($db,$sql)){
         $row = mysqli_fetch_row($re);
         if(count($row)!=0){
@@ -126,17 +121,8 @@ function selectStu($key){
             $res['status'] = 1;
         }
     }
-<<<<<<< HEAD
 
     $sql = "SELECT * FROM ".$stu." WHERE Sname like '%".$key."%'";
-=======
-    else{
-        $res['status'] = -1;
-        $res['msg'] = "查询失败：".$db -> error ;
-    }
-
-    $sql = "SELECT * FROM ".$stu." WHERE Sname = ".$key;
->>>>>>> dcd1e73287e61513fef2c7490a826be7c3581fcb
     $res['sql2'] = $sql;
     if($re = mysqli_query($db,$sql)){
         $row = mysqli_fetch_row($re);
@@ -152,13 +138,5 @@ function selectStu($key){
         else
             $status = 0;
     }
-<<<<<<< HEAD
-
-=======
-    else{
-        $res['status'] = -1;
-        $res['msg'] = "查询失败：".$db -> error ;
-    }
->>>>>>> dcd1e73287e61513fef2c7490a826be7c3581fcb
     return $res;
 }
