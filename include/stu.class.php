@@ -112,7 +112,7 @@ function selectStu($key,$page){
     $data = array();
     $v = is_numeric($key);
     if($v){
-        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%'";
         if($re = mysqli_query($db,$sql)){
             $count = mysqli_fetch_row($re)[0];
             $max_page = $count/$page_num;
@@ -124,7 +124,7 @@ function selectStu($key,$page){
         $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
     }
     else{
-        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%'";
         if($re = mysqli_query($db,$sql)){
             $count = mysqli_fetch_row($re)[0];
             $max_page = $count/$page_num;
