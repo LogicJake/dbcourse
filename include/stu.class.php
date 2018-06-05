@@ -103,3 +103,47 @@ function updateStu($sno,$sname,$ssex,$sage,$sdept){
     }
     return $res;
 }
+
+function selectStu($key){
+    global $db,$stu;
+    $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key;
+    $res['sql'] = $sql;
+    if($re = mysqli_query($db,$sql)){
+        $row = mysqli_fetch_row($re);
+        if(count($row)!=0){
+            $tmp['no'] = $row[0];
+            $tmp['name'] = $row[1];
+            $tmp['sex'] = $row[2];
+            $tmp['age'] = $row[3];
+            $tmp['dept'] = $row[4];
+            $res['data'] = $tmp;
+            $res['status'] = 1;
+        }
+    }
+    else{
+        $res['status'] = -1;
+        $res['msg'] = "查询失败：".$db -> error ;
+    }
+
+    $sql = "SELECT * FROM ".$stu." WHERE Sname = ".$key;
+    $res['sql2'] = $sql;
+    if($re = mysqli_query($db,$sql)){
+        $row = mysqli_fetch_row($re);
+        if(count($row)!=0){
+            $tmp['no'] = $row[0];
+            $tmp['name'] = $row[1];
+            $tmp['sex'] = $row[2];
+            $tmp['age'] = $row[3];
+            $tmp['dept'] = $row[4];
+            $res['data'] = $tmp;
+            $res['status'] = 1;
+        }
+        else
+            $status = 0;
+    }
+    else{
+        $res['status'] = -1;
+        $res['msg'] = "查询失败：".$db -> error ;
+    }
+    return $res;
+}
