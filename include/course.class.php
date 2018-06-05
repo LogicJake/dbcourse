@@ -29,7 +29,7 @@ function deletetCourse($cno){
 
 function selectCourseAll($page){
     global $db,$course;
-    $page_num = 5;  //每页查看5条
+    $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$course;
@@ -66,7 +66,7 @@ function selectCourseAll($page){
 
 function selectCourseStatus($page,$sno){
     global $db,$course,$sc;
-    $page_num = 5;  //每页查看5条
+    $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
     $sql = "SELECT COUNT(*) FROM ".$course;

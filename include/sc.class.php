@@ -30,7 +30,7 @@ function deletetSc($sno,$cno){
 
 function selectScByCno($page,$cno){
     global $db,$sc,$stu,$course;
-    $page_num = 5;  //每页查看5条
+    $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
     $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '" . $cno ."'";
@@ -69,7 +69,7 @@ function selectScByCno($page,$cno){
 
 function selectScBySno($page,$sno){
     global $db,$sc,$stu,$course;
-    $page_num = 5;  //每页查看5条
+    $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
     $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno;
