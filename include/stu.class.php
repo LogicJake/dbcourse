@@ -109,15 +109,20 @@ function selectStu($key){
     $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key."";
     $res['sql'] = $sql;
     $res['status'] = 0;
+    $data = array();
+
     if($re = mysqli_query($db,$sql)){
-        $row = mysqli_fetch_row($re);
-        if(count($row)!=0){
+        $rows = array();
+        while($row = mysqli_fetch_array($re)) {
+            $rows[] = $row;
+        }
+        foreach($rows as $row){
             $tmp['no'] = $row[0];
             $tmp['name'] = $row[1];
             $tmp['sex'] = $row[2];
             $tmp['age'] = $row[3];
             $tmp['dept'] = $row[4];
-            $res['data'] = $tmp;
+            array_push($data,$tmp);
             $res['status'] = 1;
         }
     }
@@ -125,18 +130,21 @@ function selectStu($key){
     $sql = "SELECT * FROM ".$stu." WHERE Sname like '%".$key."%'";
     $res['sql2'] = $sql;
     if($re = mysqli_query($db,$sql)){
-        $row = mysqli_fetch_row($re);
-        if(count($row)!=0){
+        $rows = array();
+        while($row = mysqli_fetch_array($re)) {
+            $rows[] = $row;
+        }
+        foreach($rows as $row){
             $tmp['no'] = $row[0];
             $tmp['name'] = $row[1];
             $tmp['sex'] = $row[2];
             $tmp['age'] = $row[3];
             $tmp['dept'] = $row[4];
-            $res['data'] = $tmp;
+            array_push($data,$tmp);
             $res['status'] = 1;
         }
-        else
-            $status = 0;
     }
+    if($res['status'] != 0)
+        $res['data'] = $data;
     return $res;
 }
