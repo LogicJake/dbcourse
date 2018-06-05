@@ -33,7 +33,7 @@ function selectScByCno($page,$cno){
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
 
-    $sql = "SELECT COUNT(*) FROM ".$sc;
+    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '" . $cno;
     if($re = mysqli_query($db,$sql)){
         $count = mysqli_fetch_row($re)[0];
         $max_page = $count/$page_num;
@@ -72,7 +72,7 @@ function selectScBySno($page,$sno){
     $page_num = 5;  //每页查看5条
     $start = ($page-1)*$page_num;
 
-    $sql = "SELECT COUNT(*) FROM ".$sc;
+    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = '".$sno."'";
     if($re = mysqli_query($db,$sql)){
         $count = mysqli_fetch_row($re)[0];
         $max_page = $count/$page_num;
