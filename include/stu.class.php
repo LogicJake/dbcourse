@@ -104,13 +104,39 @@ function updateStu($sno,$sname,$ssex,$sage,$sdept){
     return $res;
 }
 
-function selectStu($key){
+function selectStu($key,$page){
     global $db,$stu;
-    $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key."";
-    $res['sql'] = $sql;
+    $page_num = 10;  //每页查看5条
+    $start = ($page-1)*$page_num;
     $res['status'] = 0;
     $data = array();
+    $v = is_numeric($key);
+    if($v){
+        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        if($re = mysqli_query($db,$sql)){
+            $count = mysqli_fetch_row($re)[0];
+            $max_page = $count/$page_num;
+            if($page < $max_page)
+                $res['finished'] = FALSE;
+            else
+                $res['finished'] = TRUE;
+        }
+        $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+    }
+    else{
+        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        if($re = mysqli_query($db,$sql)){
+            $count = mysqli_fetch_row($re)[0];
+            $max_page = $count/$page_num;
+            if($page < $max_page)
+                $res['finished'] = FALSE;
+            else
+                $res['finished'] = TRUE;
+        }
+        $sql = "SELECT * FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
 
+    }
+    $res['sql'] = $sql;
     if($re = mysqli_query($db,$sql)){
         $rows = array();
         while($row = mysqli_fetch_array($re)) {
@@ -126,25 +152,6 @@ function selectStu($key){
             $res['status'] = 1;
         }
     }
-
-    $sql = "SELECT * FROM ".$stu." WHERE Sname like '%".$key."%'";
-    $res['sql2'] = $sql;
-    if($re = mysqli_query($db,$sql)){
-        $rows = array();
-        while($row = mysqli_fetch_array($re)) {
-            $rows[] = $row;
-        }
-        foreach($rows as $row){
-            $tmp['no'] = $row[0];
-            $tmp['name'] = $row[1];
-            $tmp['sex'] = $row[2];
-            $tmp['age'] = $row[3];
-            $tmp['dept'] = $row[4];
-            array_push($data,$tmp);
-            $res['status'] = 1;
-        }
-    }
-    if($res['status'] != 0)
-        $res['data'] = $data;
+    $res['data'] = $data;
     return $res;
 }
