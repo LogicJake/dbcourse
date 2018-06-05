@@ -124,17 +124,31 @@ function selectStu($key,$page){
         $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
     }
     else{
-        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%'";
-        if($re = mysqli_query($db,$sql)){
-            $count = mysqli_fetch_row($re)[0];
-            $max_page = $count/$page_num;
-            if($page < $max_page)
-                $res['finished'] = FALSE;
-            else
-                $res['finished'] = TRUE;
-        }
-        $sql = "SELECT * FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        if($key == "allstu"){
+            $sql = "SELECT COUNT(*) FROM ".$stu;
+            if($re = mysqli_query($db,$sql)){
+                $count = mysqli_fetch_row($re)[0];
+                $max_page = $count/$page_num;
+                if($page < $max_page)
+                    $res['finished'] = FALSE;
+                else
+                    $res['finished'] = TRUE;
+            }
 
+            $sql = "SELECT * FROM ".$stu." ORDER BY Sno LIMIT ".$start.",".$page_num;
+        }
+        else{
+            $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%'";
+            if($re = mysqli_query($db,$sql)){
+                $count = mysqli_fetch_row($re)[0];
+                $max_page = $count/$page_num;
+                if($page < $max_page)
+                    $res['finished'] = FALSE;
+                else
+                    $res['finished'] = TRUE;
+            }
+            $sql = "SELECT * FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
+        }
     }
     $res['sql'] = $sql;
     if($re = mysqli_query($db,$sql)){
