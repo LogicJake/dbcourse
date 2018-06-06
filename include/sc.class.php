@@ -43,7 +43,8 @@ function selectScByCno($page,$cno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '".$cno."' ORDER BY s.Sno LIMIT ".$start.",".$page_num;
+    //$sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '".$cno."' ORDER BY s.Sno LIMIT ".$start.",".$page_num;
+    $sql = "call selectScByCno($cno,$start,$page_num)";     //存储过程
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
@@ -82,7 +83,8 @@ function selectScBySno($page,$sno){
             $res['finished'] = TRUE;
     }
 
-    $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno." ORDER BY c.Cno LIMIT ".$start.",".$page_num;
+    // $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno." ORDER BY c.Cno LIMIT ".$start.",".$page_num;
+    $sql = "call selectScBySno($sno, $start, $page_num)";       //存储过程
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
