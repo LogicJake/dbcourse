@@ -28,15 +28,16 @@ function deletetSc($sno,$cno){
     return $res;
 }
 
-function selectScByCno($page,$cno){
+function selectScByCno($page,$cno,$key){
     global $db,$sc,$stu,$course;
     $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
-    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '" . $cno ."'";
+    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '" . $cno ."' ".$key;
     if($re = mysqli_query($db,$sql)){
         $count = mysqli_fetch_row($re)[0];
         $max_page = $count/$page_num;
+        $res['num'] = $count;
         if($page < $max_page)
             $res['finished'] = FALSE;
         else
@@ -44,7 +45,9 @@ function selectScByCno($page,$cno){
     }
 
     //$sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.Cno = '".$cno."' ORDER BY s.Sno LIMIT ".$start.",".$page_num;
-    $sql = "call selectScByCno($cno,$start,$page_num)";     //存储过程
+    $key = '"'.$key.'"';
+    $cno = '"'.$cno.'"';
+    $sql = "call selectScByCno($cno,$start,$page_num,$key)";     //存储过程
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
@@ -68,15 +71,16 @@ function selectScByCno($page,$cno){
     return $res;
 }
 
-function selectScBySno($page,$sno){
+function selectScBySno($page,$sno,$key){
     global $db,$sc,$stu,$course;
     $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
 
-    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno;
+    $sql = "SELECT COUNT(*) FROM sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno." ".$key;
     if($re = mysqli_query($db,$sql)){
         $count = mysqli_fetch_row($re)[0];
         $max_page = $count/$page_num;
+        $res['num'] = $count;
         if($page < $max_page)
             $res['finished'] = FALSE;
         else
@@ -84,7 +88,8 @@ function selectScBySno($page,$sno){
     }
 
     // $sql = "select ".$stu.".Sno,".$stu.".Sname,".$course.".Cname,".$course.".Ccredit,".$course.".Cno,".$sc.".Grade from sc,c,s where s.sno = sc.sno and c.cno = sc.cno and sc.sno = ".$sno." ORDER BY c.Cno LIMIT ".$start.",".$page_num;
-    $sql = "call selectScBySno($sno, $start, $page_num)";       //存储过程
+    $key = '"'.$key.'"';
+    $sql = "call selectScBySno($sno, $start, $page_num,$key)";       //存储过程
     $res['sql'] = $sql;
     $data = array();
     if($re = mysqli_query($db,$sql)){
