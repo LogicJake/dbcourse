@@ -85,11 +85,13 @@ CREATE TABLE `sc` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectScByCno`(cno int,start int,page_num int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectScByCno`(cno varchar(1000),start int,page_num int,key_words varchar(1000) character set utf8)
 BEGIN
-	SELECT s.Sno,s.Sname,c.Cname,c.Ccredit,sc.Grade 
-    FROM sc,c,s 
-    WHERE s.sno = sc.sno and c.cno = sc.cno and sc.Cno = cno ORDER BY s.Sno LIMIT start,page_num;
+	declare strSql varchar(1000) character set utf8;
+	set strSql = concat("SELECT s.Sno,s.Sname,c.Cno,c.Cname,c.Ccredit,sc.Grade FROM sc,c,s WHERE s.sno = sc.sno AND c.cno = sc.cno AND sc.Cno = '",cno,"' ",key_words," ORDER BY s.Sno LIMIT ",start,",",page_num,";");
+	set @sql1 = strSql;
+    prepare stmt_p from @sql1;
+    execute stmt_p;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -106,11 +108,13 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `selectScBySno`(sno int,start int,page_num int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectScBySno`(sno int,start int,page_num int,key_words varchar(1000) character set utf8)
 BEGIN
-   SELECT s.Sno,s.Sname,c.Cname,c.Ccredit,c.Cno,sc.Grade 
-   FROM sc,c,s 
-   WHERE s.sno = sc.sno and c.cno = sc.cno and sc.sno = sno ORDER BY c.Cno LIMIT start,page_num;
+	declare strSql varchar(1000) character set utf8;
+	set strSql = concat("SELECT s.Sno,s.Sname,c.Cno,c.Cname,c.Ccredit,sc.Grade FROM sc,c,s WHERE s.sno = sc.sno AND c.cno = sc.cno AND sc.sno = ",sno," ",key_words," ORDER BY c.Cno LIMIT ",start,",",page_num,";");
+	set @sql1 = strSql;
+    prepare stmt_p from @sql1;
+    execute stmt_p;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -127,4 +131,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-06 11:06:57
+-- Dump completed on 2018-06-08 23:12:03
