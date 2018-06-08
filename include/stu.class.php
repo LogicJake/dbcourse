@@ -27,45 +27,6 @@ function deletetStu($sno){
     return $res;
 }
 
-function selectStuAll($page){
-    global $db,$stu;
-    $page_num = 5;  //每页查看5条
-    $start = ($page-1)*$page_num;
-
-    $sql = "SELECT COUNT(*) FROM ".$stu;
-    if($re = mysqli_query($db,$sql)){
-        $count = mysqli_fetch_row($re)[0];
-        $max_page = $count/$page_num;
-        if($page < $max_page)
-            $res['finished'] = FALSE;
-        else
-            $res['finished'] = TRUE;
-    }
-
-    $sql = "SELECT * FROM ".$stu." ORDER BY Sno LIMIT ".$start.",".$page_num;
-    $res['sql'] = $sql;
-    $data = array();
-    if($re = mysqli_query($db,$sql)){
-        $rows = array();
-        while($row = mysqli_fetch_array($re)) {
-            $rows[] = $row;
-        }
-        foreach($rows as $row){
-            $tmp['no'] = $row[0];
-            $tmp['name'] = $row[1];
-            $tmp['sex'] = $row[2];
-            $tmp['age'] = $row[3];
-            $tmp['dept'] = $row[4];
-            array_push($data,$tmp);
-        }
-        $res['msg'] = "查询成功";
-        $res['data'] = $data;
-    }
-    else
-        $res['msg'] = "查询失败：".$db -> error ;
-    return $res;
-}
-
 function getStu($sno){
     global $db,$stu;
     $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$sno;
@@ -110,46 +71,20 @@ function selectStu($key,$page){
     $start = ($page-1)*$page_num;
     $res['status'] = 0;
     $data = array();
-    $v = is_numeric($key);
-    if($v){
-        $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%'";
-        if($re = mysqli_query($db,$sql)){
-            $count = mysqli_fetch_row($re)[0];
-            $max_page = $count/$page_num;
-            if($page < $max_page)
-                $res['finished'] = FALSE;
-            else
-                $res['finished'] = TRUE;
-        }
-        $sql = "SELECT * FROM ".$stu." WHERE Sno = ".$key . " OR Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
-    }
-    else{
-        if($key == "allstu"){
-            $sql = "SELECT COUNT(*) FROM ".$stu;
-            if($re = mysqli_query($db,$sql)){
-                $count = mysqli_fetch_row($re)[0];
-                $max_page = $count/$page_num;
-                if($page < $max_page)
-                    $res['finished'] = FALSE;
-                else
-                    $res['finished'] = TRUE;
-            }
 
-            $sql = "SELECT * FROM ".$stu." ORDER BY Sno LIMIT ".$start.",".$page_num;
-        }
-        else{
-            $sql = "SELECT COUNT(*) FROM ".$stu." WHERE Sname like '%" . $key. "%'";
-            if($re = mysqli_query($db,$sql)){
-                $count = mysqli_fetch_row($re)[0];
-                $max_page = $count/$page_num;
-                if($page < $max_page)
-                    $res['finished'] = FALSE;
-                else
-                    $res['finished'] = TRUE;
-            }
-            $sql = "SELECT * FROM ".$stu." WHERE Sname like '%" . $key. "%' ORDER BY Sno LIMIT ".$start.",".$page_num;
-        }
+    $sql = "SELECT COUNT(*) FROM ".$stu." ".$key;
+    if($re = mysqli_query($db,$sql)){
+        $count = mysqli_fetch_row($re)[0];
+        $res['num'] = $count;
+        $max_page = $count/$page_num;
+        if($page < $max_page)
+            $res['finished'] = FALSE;
+        else
+            $res['finished'] = TRUE;
     }
+
+
+    $sql = "SELECT * FROM ".$stu." ".$key." ORDER BY Sno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
     if($re = mysqli_query($db,$sql)){
         $rows = array();
