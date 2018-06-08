@@ -27,14 +27,17 @@ function deletetCourse($cno){
     return $res;
 }
 
-function selectCourseAll($page){
+function selectCourse($key,$page){
     global $db,$course;
     $page_num = 10;  //每页查看5条
     $start = ($page-1)*$page_num;
+    $res['status'] = 0;
+    $data = array();
 
-    $sql = "SELECT COUNT(*) FROM ".$course;
+    $sql = "SELECT COUNT(*) FROM ".$course." ".$key;
     if($re = mysqli_query($db,$sql)){
         $count = mysqli_fetch_row($re)[0];
+        $res['num'] = $count;
         $max_page = $count/$page_num;
         if($page < $max_page)
             $res['finished'] = FALSE;
@@ -42,25 +45,24 @@ function selectCourseAll($page){
             $res['finished'] = TRUE;
     }
 
-    $sql = "SELECT * FROM ".$course." ORDER BY Cno LIMIT ".$start.",".$page_num;
+    $sql = "SELECT * FROM ".$course." ".$key." ORDER BY Cno LIMIT ".$start.",".$page_num;
     $res['sql'] = $sql;
-    $data = array();
     if($re = mysqli_query($db,$sql)){
         $rows = array();
-        
-        $i = 0;
         while($row = mysqli_fetch_array($re)) {
             $tmp['no'] = $row[0];
             $tmp['name'] = $row[1];
             $tmp['credit'] = $row[2];
+            $res['status'] = 1;
             array_push($data,$tmp);
         }
-        mysqli_free_result($re);
-        $res['msg'] = "查询成功";
+        $res['status'] = 1;
         $res['data'] = $data;
     }
-    else
+    else{
+        $res['status'] = -11;
         $res['msg'] = "查询失败：".$db -> error ;
+    }
     return $res;
 }
 

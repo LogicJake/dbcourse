@@ -98,9 +98,13 @@ function selectStu($key,$page){
             $tmp['age'] = $row[3];
             $tmp['dept'] = $row[4];
             array_push($data,$tmp);
-            $res['status'] = 1;
         }
+        $res['status'] = 1;
+        $res['data'] = $data;
     }
-    $res['data'] = $data;
+    else{
+        $res['status'] = -1;
+        $res['msg'] = "查询失败：".$db -> error ;
+    }
     return $res;
 }
