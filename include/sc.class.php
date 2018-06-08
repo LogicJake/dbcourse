@@ -101,9 +101,9 @@ function selectScBySno($page,$sno,$key){
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
-            $tmp['cno'] = $row[4];
-            $tmp['cname'] = $row[2];
-            $tmp['credit'] = $row[3];
+            $tmp['cno'] = $row[2];
+            $tmp['cname'] = $row[3];
+            $tmp['credit'] = $row[4];
             $tmp['grade'] = $row[5]==null?"未录入":$row[5];
             array_push($data,$tmp);
         }
