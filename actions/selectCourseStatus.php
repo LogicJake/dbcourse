@@ -1,8 +1,8 @@
 <?php
 
 require_once './include/course.class.php';
-if(isset($_GET['page'],$_GET['sno'])){
-    $res = selectCourseStatus($_GET['page'],$_GET['sno']);
+if(isset($_GET['key'],$_GET['page'],$_GET['sno'])){
+    $res = selectCourseStatus($_GET['key'],$_GET['page'],$_GET['sno']);
     Result::success($res);
 }
 else
