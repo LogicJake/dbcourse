@@ -58,9 +58,10 @@ function selectScByCno($page,$cno,$key){
         foreach($rows as $row){
             $tmp['sno'] = $row[0];
             $tmp['sname'] = $row[1];
-            $tmp['cname'] = $row[2];
-            $tmp['credit'] = $row[3];
-            $tmp['grade'] = $row[4]==null?"未录入":$row[4];
+            $tmp['cno'] = $row[2];
+            $tmp['cname'] = $row[3];
+            $tmp['credit'] = $row[4];
+            $tmp['grade'] = $row[5]==null?"未录入":$row[4];
             array_push($data,$tmp);
         }
         $res['msg'] = "查询成功";
